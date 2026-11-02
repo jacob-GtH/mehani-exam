@@ -1,0 +1,80 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #0d1514;
+  --color-card: #131f1c;
+  --color-card2: #192b26;
+  --color-card-hover: #1e352f;
+  --color-line: #1c3d35;
+  --color-line-glow: #24584c;
+  --color-hd: #5eead4;
+  --color-pri: #059669;
+  --color-pri-hover: #10b981;
+  --color-pri2: #047857;
+  --color-mute: #8fa59e;
+  --color-ok: #34d399;
+  --color-bad: #f87171;
+  --color-amber: #fbbf24;
+}
+
+body {
+  background-color: var(--color-bg);
+  background-image: 
+    radial-gradient(at 100% 0%, rgba(10, 107, 61, 0.15) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(94, 234, 212, 0.08) 0px, transparent 50%),
+    radial-gradient(at 50% 50%, rgba(19, 31, 28, 0.5) 0px, transparent 100%);
+  background-attachment: fixed;
+  color: #f0fdf9;
+  line-height: 1.8;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  min-height: 100vh;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-line);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-pri);
+}
+
+/* Glassmorphism & Micro-interactions */
+.glass-panel {
+  background: rgba(19, 31, 28, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(36, 88, 76, 0.4);
+}
+
+.glass-card {
+  background: rgba(25, 43, 38, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(36, 88, 76, 0.35);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card:hover {
+  background: rgba(30, 53, 47, 0.8);
+  border-color: rgba(94, 234, 212, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px -10px rgba(0, 0, 0, 0.5), 0 0 20px -5px rgba(94, 234, 212, 0.15);
+}
+
+@keyframes pulseSlow {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.85; transform: scale(0.98); }
+}
+
+.animate-pulse-slow {
+  animation: pulseSlow 3s ease-in-out infinite;
+}
+

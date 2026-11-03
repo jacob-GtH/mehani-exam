@@ -45,41 +45,42 @@ export default async function ExamPage({ params }: P) {
 
       {/* Header Card */}
       <div className="rounded-3xl glass-panel p-6 sm:p-8 space-y-6">
-        <div className="flex items-center gap-2 text-xs font-semibold text-emerald-300">
+        <div className="flex items-center gap-2 text-xs font-semibold text-[color:var(--color-hd)]">
           <Link href="/" className="hover:underline">الرئيسية</Link>
           <span>/</span>
-          <span className="text-mute">اختبارات الاعتماد المهني</span>
+          <span className="text-[color:var(--color-mute)]">اختبارات الاعتماد المهني</span>
         </div>
 
         <div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-white leading-tight">
-            اختبار <span className="text-hd">{e.title}</span> التجريبي
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-[color:var(--color-text)] leading-tight">
+            اختبار <span className="text-[color:var(--color-hd)]">{e.title}</span> التجريبي
           </h1>
-          <p className="mt-3 text-sm md:text-base text-mute leading-relaxed">
+          <p className="mt-3 text-sm md:text-base text-[color:var(--color-mute)] leading-relaxed">
             {e.description}
           </p>
         </div>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-3 gap-3 py-4 border-y border-emerald-900/40 text-center">
-          <div className="p-3 rounded-xl bg-card2/60">
-            <span className="block text-xl md:text-2xl font-black text-emerald-300">{e.count}</span>
-            <span className="text-xs text-mute font-medium">سؤال تدريبي</span>
+        <div className="grid grid-cols-3 gap-3 py-4 border-y border-[color:var(--color-line)]/[0.4] text-center">
+          <div className="p-3 rounded-xl bg-[color:var(--color-card2)]/[0.6]">
+            <span className="block text-xl md:text-2xl font-black text-[color:var(--color-hd)]">{e.count}</span>
+            <span className="text-xs text-[color:var(--color-mute)] font-medium">سؤال تدريبي</span>
           </div>
-          <div className="p-3 rounded-xl bg-card2/60">
-            <span className="block text-xl md:text-2xl font-black text-emerald-300">{e.passMark}%</span>
-            <span className="text-xs text-mute font-medium">نسبة النجاح</span>
+          <div className="p-3 rounded-xl bg-[color:var(--color-card2)]/[0.6]">
+            <span className="block text-xl md:text-2xl font-black text-[color:var(--color-hd)]">{e.passMark}%</span>
+            <span className="text-xs text-[color:var(--color-mute)] font-medium">نسبة النجاح</span>
           </div>
-          <div className="p-3 rounded-xl bg-card2/60">
-            <span className="block text-xl md:text-2xl font-black text-emerald-300">مجاني</span>
-            <span className="text-xs text-mute font-medium">إعادة غير محدودة</span>
+          <div className="p-3 rounded-xl bg-[color:var(--color-card2)]/[0.6]">
+            <span className="block text-xl md:text-2xl font-black text-[color:var(--color-hd)]">مجاني</span>
+            <span className="text-xs text-[color:var(--color-mute)] font-medium">إعادة غير محدودة</span>
           </div>
         </div>
 
         {/* CTA Button */}
         <Link
           href={`/exam/${slug}/start`}
-          className="flex items-center justify-center gap-2 w-full rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white py-4 px-6 font-black text-lg shadow-lg shadow-emerald-950/60 transition-all hover:scale-[1.01] active:scale-[0.99]"
+          className="flex items-center justify-center gap-2 w-full rounded-2xl text-[color:var(--color-bg)] py-4 px-6 font-black text-lg shadow-lg shadow-[color:var(--color-pri)]/[0.3] transition-all hover:scale-[1.01] active:scale-[0.99]"
+          style={{ background: 'linear-gradient(to right, var(--color-pri), var(--color-pri-hover))' }}
         >
           <span>بدء الاختبار الآن</span>
           <span className="text-xl">←</span>
@@ -89,13 +90,13 @@ export default async function ExamPage({ params }: P) {
       {/* Sample Questions */}
       {!!e.sample?.length && (
         <section className="rounded-3xl glass-panel p-6 sm:p-8 space-y-4">
-          <h2 className="text-lg md:text-xl font-bold text-hd flex items-center gap-2">
+          <h2 className="text-lg md:text-xl font-bold text-[color:var(--color-hd)] flex items-center gap-2">
             <span>📝</span> عينة من أسئلة الاختبار
           </h2>
           <div className="space-y-3">
             {e.sample.map((t, idx) => (
-              <div key={idx} className="flex items-start gap-3 p-4 rounded-xl bg-card2/40 border border-emerald-900/30 text-sm md:text-base text-emerald-100/90 leading-relaxed">
-                <span className="w-6 h-6 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-800/60 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">
+              <div key={idx} className="flex items-start gap-3 p-4 rounded-xl bg-[color:var(--color-card2)]/[0.4] border border-[color:var(--color-line)]/[0.3] text-sm md:text-base text-[color:var(--color-text)] leading-relaxed">
+                <span className="w-6 h-6 rounded-full bg-[color:var(--color-bg-dark)]/[0.1] text-[color:var(--color-hd)] border border-[color:var(--color-line)]/[0.6] flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">
                   {idx + 1}
                 </span>
                 <span>{t}</span>
@@ -107,16 +108,16 @@ export default async function ExamPage({ params }: P) {
 
       {/* FAQ */}
       <section className="rounded-3xl glass-panel p-6 sm:p-8 space-y-4">
-        <h2 className="text-lg md:text-xl font-bold text-hd flex items-center gap-2">
+        <h2 className="text-lg md:text-xl font-bold text-[color:var(--color-hd)] flex items-center gap-2">
           <span>❓</span> الأسئلة الشائعة
         </h2>
-        <div className="space-y-4 divide-y divide-emerald-900/30">
+        <div className="space-y-4 divide-y divide-[color:var(--color-line)]/[0.3]">
           {faq.map(([q, a], idx) => (
             <div key={idx} className={idx > 0 ? "pt-4" : ""}>
-              <h3 className="font-bold text-white text-base mb-1.5 flex items-center gap-2">
-                <span className="text-emerald-400">•</span> {q}
+              <h3 className="font-bold text-[color:var(--color-text)] text-base mb-1.5 flex items-center gap-2">
+                <span className="text-[color:var(--color-pri)]">•</span> {q}
               </h3>
-              <p className="text-sm text-mute leading-relaxed pr-4">{a}</p>
+              <p className="text-sm text-[color:var(--color-mute)] leading-relaxed pr-4">{a}</p>
             </div>
           ))}
         </div>
@@ -124,7 +125,7 @@ export default async function ExamPage({ params }: P) {
 
       {/* Other Exams */}
       <section className="space-y-4">
-        <h2 className="text-lg md:text-xl font-bold text-hd">اختبارات مهن أخرى قد تهمك</h2>
+        <h2 className="text-lg md:text-xl font-bold text-[color:var(--color-hd)]">اختبارات مهن أخرى قد تهمك</h2>
         <div className="flex flex-wrap gap-2.5">
           {all
             .filter((x) => x.slug !== slug)
@@ -133,7 +134,7 @@ export default async function ExamPage({ params }: P) {
               <Link
                 key={x._id}
                 href={`/exam/${x.slug}`}
-                className="rounded-xl px-4 py-2 text-xs md:text-sm font-semibold glass-card text-emerald-200/90 hover:text-white"
+                className="rounded-xl px-4 py-2 text-xs md:text-sm font-semibold glass-card text-[color:var(--color-text)] hover:text-[color:var(--color-hd)]"
               >
                 {x.title}
               </Link>

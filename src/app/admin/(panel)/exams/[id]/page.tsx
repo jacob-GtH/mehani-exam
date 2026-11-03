@@ -31,7 +31,7 @@ export default async function EditExam({ params, searchParams }: { params: Promi
         <input name="slug" defaultValue={exam.slug} dir="ltr" className={inp} aria-label="الرابط" />
         <textarea name="description" defaultValue={exam.description} rows={2} className={inp} />
         <label className="block text-sm text-mute">حد النجاح %<input name="passMark" type="number" min={1} max={100} defaultValue={exam.passMark} className={inp} /></label>
-        <label className="flex items-center gap-2"><input type="checkbox" name="published" defaultChecked={exam.published} className="h-5 w-5 accent-green-500" /> منشور (يظهر للزوار)</label>
+        <label className="flex items-center gap-2"><input type="checkbox" name="published" defaultChecked={exam.published} className="h-5 w-5 accent-[color:var(--color-ok)]" /> منشور (يظهر للزوار)</label>
         <button className="w-full rounded-xl bg-pri py-2 font-bold">حفظ الإعدادات</button>
       </form>
 

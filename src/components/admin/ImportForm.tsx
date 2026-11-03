@@ -19,8 +19,8 @@ export default function ImportForm({ exams }: { exams: { _id: string; title: str
     <form action={importQuestions} className="space-y-4">
       <div className="rounded-2xl border-2 border-line bg-card p-5 text-sm leading-7 text-mute">
         <p className="mb-2 font-bold text-hd">الصيغة المقبولة</p>
-        <p>افصل بين الأسئلة بسطر فارغ. للتنقل بين الاختبارات ابدأ سطرًا بـ <b className="text-ink">##</b> ثم اسم الاختبار، واختياريًا <b>| slug-بالإنجليزية</b>. الاختبار غير الموجود يُنشأ تلقائيًا، والسؤال المكرر يُتجاهل.</p>
-        <pre dir="rtl" className="mt-2 whitespace-pre-wrap rounded-lg bg-card2 p-3 text-ink">{`## عامل مخزن | warehouse
+        <p>افصل بين الأسئلة بسطر فارغ. للتنقل بين الاختبارات ابدأ سطرًا بـ <b className="text-[color:var(--color-text)]">##</b> ثم اسم الاختبار، واختياريًا <b>| slug-بالإنجليزية</b>. الاختبار غير الموجود يُنشأ تلقائيًا، والسؤال المكرر يُتجاهل.</p>
+        <pre dir="rtl" className="mt-2 whitespace-pre-wrap rounded-lg bg-[color:var(--color-card2)] p-3 text-[color:var(--color-text)]">{`## عامل مخزن | warehouse
 ما الغرض من ترتيب البضائع في الرفوف؟
 أ) الزينة
 ب) سهولة الوصول وتقليل الحوادث
@@ -57,7 +57,7 @@ export default function ImportForm({ exams }: { exams: { _id: string; title: str
           {exams.map((x) => <option key={x._id} value={x._id}>{x.title}</option>)}
         </select>
       )}
-      <label className="flex items-center gap-2"><input type="checkbox" name="publish" className="h-5 w-5 accent-green-500" /> انشر الاختبارات الجديدة فورًا (وإلا تبقى مسودة)</label>
+      <label className="flex items-center gap-2"><input type="checkbox" name="publish" className="h-5 w-5 accent-[color:var(--color-ok)]" /> انشر الاختبارات الجديدة فورًا (وإلا تبقى مسودة)</label>
       <button disabled={!can} className="w-full rounded-xl bg-pri py-3 font-bold disabled:opacity-40">استيراد</button>
     </form>
   );

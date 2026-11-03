@@ -22,12 +22,18 @@ export default function Quiz({ exam }: { exam: Exam }) {
   const fin = useRef(() => {});
 
   const start = (src: Q[]) => {
-    const list = shuffle(src).map((q) => {
-      const idx = shuffle(q.options.map((_, k) => k));
-      return { key: q._key, text: q.text, options: idx.map((k) => q.options[k]), correct: idx.indexOf(q.correct), explanation: q.explanation };
-    });
-    setItems(list); setI(0); setAns({}); setFlag({}); setLeft(list.length * 60);
-    t0.current = Date.now(); done.current = false; setPhase("quiz");
+    if (!src || !src.length) return;
+    try {
+      const list = shuffle(src).map((q) => {
+        const idx = shuffle(q.options.map((_, k) => k));
+        return { key: q._key, text: q.text, options: idx.map((k) => q.options[k]), correct: idx.indexOf(q.correct), explanation: q.explanation };
+      });
+      if (!list.length) return;
+      setItems(list); setI(0); setAns({}); setFlag({}); setLeft(list.length * 60);
+      t0.current = Date.now(); done.current = false; setPhase("quiz");
+    } catch {
+      // تجاهل أي خطأ مفاجئ حتى لا يظل التطبيق عالقاً
+    }
   };
 
   const finish = () => {
@@ -50,20 +56,20 @@ export default function Quiz({ exam }: { exam: Exam }) {
   useEffect(() => { if (phase === "quiz" && mode === "exam" && left <= 0) fin.current(); }, [left, phase, mode]);
 
   if (phase === "setup") return (
-    <div className="max-w-xl mx-auto rounded-3xl glass-panel p-6 sm:p-8 space-y-6 text-center border border-emerald-800/40 shadow-2xl">
-      <div className="w-16 h-16 mx-auto rounded-2xl bg-emerald-950/80 border border-emerald-500/30 flex items-center justify-center text-3xl shadow-inner">
+    <div className="max-w-xl mx-auto rounded-3xl glass-panel p-6 sm:p-8 space-y-6 text-center border border-[color:var(--color-line)]/[0.4] shadow-2xl">
+      <div className="w-16 h-16 mx-auto rounded-2xl bg-[color:var(--color-bg-dark)]/[0.2] border border-[color:var(--color-pri)]/[0.3] flex items-center justify-center text-3xl shadow-inner">
         🎯
       </div>
 
       <div>
-        <h1 className="text-2xl sm:text-3xl font-black text-white">{exam.title}</h1>
-        <p className="mt-2 text-sm text-mute">
+        <h1 className="text-2xl sm:text-3xl font-black text-[color:var(--color-text)]">{exam.title}</h1>
+        <p className="mt-2 text-sm text-[color:var(--color-mute)]">
           {exam.count} سؤال تدريبي · حد النجاح المطلوب {exam.passMark}%
         </p>
       </div>
 
       <div className="space-y-3 text-right">
-        <label className="text-xs font-bold text-emerald-300 block">اختر أسلوب الاختبار:</label>
+        <label className="text-xs font-bold text-[color:var(--color-hd)] block">اختر أسلوب الاختبار:</label>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {([
             ["practice", "وضع التدريب", "تصحيح فوري وشرح مباشر بعد كل إجابة", "💡"],
@@ -74,17 +80,17 @@ export default function Quiz({ exam }: { exam: Exam }) {
               type="button"
               aria-pressed={mode === m}
               onClick={() => setMode(m)}
-              className={`text-right rounded-2xl p-4 border-2 transition-all flex flex-col justify-between ${
+              className={`text-right rounded-2xl p-4 border-2 transition-colors flex flex-col justify-between ${
                 mode === m
-                  ? "border-emerald-400 bg-emerald-950/60 shadow-lg shadow-emerald-950"
-                  : "border-emerald-900/50 bg-card/60 hover:border-emerald-800"
+                  ? "border-[color:var(--color-hd)] bg-[color:var(--color-card)] shadow-lg shadow-[color:var(--color-pri)]/[0.15]"
+                  : "border-[color:var(--color-line)]/[0.5] bg-[color:var(--color-card2)]/[0.6] hover:border-[color:var(--color-line)] active:bg-[color:var(--color-card2)]"
               }`}
             >
               <div className="flex items-center justify-between mb-1.5">
-                <span className="font-bold text-white text-base">{t}</span>
+                <span className="font-bold text-[color:var(--color-text)] text-base">{t}</span>
                 <span className="text-xl">{icon}</span>
               </div>
-              <p className="text-xs text-mute leading-relaxed">{d}</p>
+              <p className="text-xs text-[color:var(--color-mute)] leading-relaxed">{d}</p>
             </button>
           ))}
         </div>
@@ -92,14 +98,16 @@ export default function Quiz({ exam }: { exam: Exam }) {
 
       <div className="pt-2 space-y-3">
         <button
+          type="button"
           onClick={() => start(exam.questions!)}
-          className="w-full rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white py-3.5 px-6 font-bold text-lg shadow-lg shadow-emerald-950 transition-all hover:scale-[1.01] active:scale-[0.99]"
+          className="w-full rounded-2xl text-[color:var(--color-bg)] py-3.5 px-6 font-bold text-lg shadow-lg shadow-[color:var(--color-pri)]/[0.25] transition-colors active:opacity-90"
+          style={{ background: 'linear-gradient(to right, var(--color-pri), var(--color-pri-hover))' }}
         >
           ابدأ التدريب الآن ←
         </button>
         <Link
           href={`/exam/${exam.slug}`}
-          className="block text-xs font-semibold text-mute hover:text-white transition-colors"
+          className="block text-xs font-semibold text-[color:var(--color-mute)] hover:text-[color:var(--color-hd)] transition-colors"
         >
           رجوع لصفحة تفاصيل المهنة
         </Link>
@@ -115,41 +123,47 @@ export default function Quiz({ exam }: { exam: Exam }) {
     return (
       <div className="space-y-6 max-w-2xl mx-auto">
         {/* Score Card */}
-        <div className="rounded-3xl glass-panel p-8 text-center border border-emerald-800/40 relative overflow-hidden">
-          <div className="absolute top-0 right-0 left-0 h-1.5 bg-gradient-to-r from-emerald-500 via-teal-400 to-green-500" />
-          <div className="w-20 h-20 mx-auto mb-4 rounded-3xl flex items-center justify-center text-4xl shadow-inner bg-card2/80">
+        <div className="rounded-3xl glass-panel p-8 text-center border border-[color:var(--color-line)]/[0.4] relative overflow-hidden">
+          <div 
+            className="absolute top-0 right-0 left-0 h-1.5"
+            style={{ background: 'linear-gradient(to right, var(--color-pri), var(--color-pri-hover), var(--color-pri2))' }}
+          />
+          <div className="w-20 h-20 mx-auto mb-4 rounded-3xl flex items-center justify-center text-4xl shadow-inner bg-[color:var(--color-card2)]/[0.8]">
             {pass ? "🎉" : "📚"}
           </div>
-          <div className={`text-6xl sm:text-7xl font-black mb-2 tracking-tight ${pass ? "text-emerald-400" : "text-rose-400"}`}>
+          <div className={`text-6xl sm:text-7xl font-black mb-2 tracking-tight ${pass ? "text-[color:var(--color-ok)]" : "text-[color:var(--color-bad)]"}`}>
             {pct}%
           </div>
-          <h2 className="text-xl sm:text-2xl font-black text-white">
+          <h2 className="text-xl sm:text-2xl font-black text-[color:var(--color-text)]">
             {pass ? `مبروك! اجتزت الاختبار بنجاح (المطلوب ${exam.passMark}%)` : `فرصة أفضل في المرة القادمة (المطلوب ${exam.passMark}%)`}
           </h2>
-          <p className="mt-2 text-sm text-mute">
-            أجبت بشكل صحيح على <b className="text-white">{ok}</b> من أصل <b className="text-white">{items.length}</b> سؤال · استغرقت <b className="text-white">{Math.floor(sec / 60)}</b> دقيقة و <b className="text-white">{sec % 60}</b> ثانية
+          <p className="mt-2 text-sm text-[color:var(--color-mute)]">
+            أجبت بشكل صحيح على <b className="text-[color:var(--color-text)]">{ok}</b> من أصل <b className="text-[color:var(--color-text)]">{items.length}</b> سؤال · استغرقت <b className="text-[color:var(--color-text)]">{Math.floor(sec / 60)}</b> دقيقة و <b className="text-[color:var(--color-text)]">{sec % 60}</b> ثانية
           </p>
         </div>
 
         {/* Actions */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <button
+            type="button"
             onClick={() => start(exam.questions!)}
-            className="rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white py-3.5 px-4 font-bold text-sm shadow-md transition-all active:scale-95"
+            className="rounded-2xl text-[color:var(--color-bg)] py-3.5 px-4 font-bold text-sm shadow-md transition-colors active:opacity-85"
+            style={{ background: 'linear-gradient(to right, var(--color-pri), var(--color-pri-hover))' }}
           >
             إعادة الاختبار كامل 🔄
           </button>
           {!!wrongKeys.size && (
             <button
+              type="button"
               onClick={() => start(exam.questions!.filter((q) => wrongKeys.has(q._key)))}
-              className="rounded-2xl glass-card text-emerald-300 border border-emerald-500/30 hover:border-emerald-400 py-3.5 px-4 font-bold text-sm transition-all active:scale-95"
+              className="rounded-2xl glass-card text-[color:var(--color-hd)] border border-[color:var(--color-pri)]/[0.3] hover:border-[color:var(--color-hd)] py-3.5 px-4 font-bold text-sm transition-colors active:opacity-85"
             >
               تدرب على أخطائك فقط ({wrongKeys.size}) ⚠️
             </button>
           )}
           <Link
             href="/"
-            className="rounded-2xl glass-card text-mute hover:text-white py-3.5 px-4 font-bold text-sm text-center transition-all flex items-center justify-center"
+            className="rounded-2xl glass-card text-[color:var(--color-mute)] hover:text-[color:var(--color-text)] py-3.5 px-4 font-bold text-sm text-center transition-colors flex items-center justify-center"
           >
             جميع المهن 📋
           </Link>
@@ -157,35 +171,35 @@ export default function Quiz({ exam }: { exam: Exam }) {
 
         {/* Mistakes Review */}
         <div className="rounded-3xl glass-panel p-6 sm:p-8 space-y-4">
-          <div className="flex items-center justify-between border-b border-emerald-900/40 pb-3">
-            <h3 className="text-lg font-bold text-hd flex items-center gap-2">
+          <div className="flex items-center justify-between border-b border-[color:var(--color-line)]/[0.4] pb-3">
+            <h3 className="text-lg font-bold text-[color:var(--color-hd)] flex items-center gap-2">
               <span>🔍</span> مراجعة الأخطاء والإجابات
             </h3>
-            <span className="text-xs text-mute font-medium">
+            <span className="text-xs text-[color:var(--color-mute)] font-medium">
               {wrongKeys.size ? `${wrongKeys.size} أسئلة بحاجة لمراجعة` : "لا توجد أي أخطاء!"}
             </span>
           </div>
 
-          <div className="space-y-4 divide-y divide-emerald-900/30">
+          <div className="space-y-4 divide-y divide-[color:var(--color-line)]/[0.3]">
             {items.map((q, n) => {
               const isWrong = ans[n] !== q.correct;
               if (!isWrong) return null;
               return (
                 <div key={q.key} className="pt-4 space-y-3">
-                  <p className="font-bold text-white text-base leading-snug">{q.text}</p>
+                  <p className="font-bold text-[color:var(--color-text)] text-base leading-snug">{q.text}</p>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs md:text-sm">
-                    <div className="p-3 rounded-xl bg-rose-950/40 border border-rose-900/40 text-rose-300">
+                    <div className="p-3 rounded-xl bg-[color:var(--color-bad)]/[0.1] border border-[color:var(--color-bad)]/[0.3] text-[color:var(--color-bad)]">
                       <span className="font-bold block mb-1">❌ إجابتك:</span>
                       <span>{ans[n] === undefined ? "لم تجب على السؤال" : q.options[ans[n]]}</span>
                     </div>
-                    <div className="p-3 rounded-xl bg-emerald-950/40 border border-emerald-800/40 text-emerald-300">
+                    <div className="p-3 rounded-xl bg-[color:var(--color-ok)]/[0.1] border border-[color:var(--color-ok)]/[0.3] text-[color:var(--color-ok)]">
                       <span className="font-bold block mb-1">✓ الإجابة الصحيحة:</span>
                       <span>{q.options[q.correct]}</span>
                     </div>
                   </div>
                   {q.explanation && (
-                    <div className="p-3 rounded-xl bg-card2/60 border border-emerald-900/30 text-xs text-mute leading-relaxed">
-                      <b className="text-emerald-300 ml-1">💡 التوضيح والشرح:</b>
+                    <div className="p-3 rounded-xl bg-[color:var(--color-card2)]/[0.6] border border-[color:var(--color-line)]/[0.3] text-xs text-[color:var(--color-mute)] leading-relaxed">
+                      <b className="text-[color:var(--color-hd)] ml-1">💡 التوضيح والشرح:</b>
                       {q.explanation}
                     </div>
                   )}
@@ -194,7 +208,7 @@ export default function Quiz({ exam }: { exam: Exam }) {
             })}
 
             {!wrongKeys.size && (
-              <div className="py-8 text-center text-emerald-300 font-medium">
+              <div className="py-8 text-center text-[color:var(--color-ok)] font-medium">
                 ممتاز جداً! جميع إجاباتك كانت صحيحة وبلا أي أخطاء 🌟
               </div>
             )}
@@ -212,15 +226,15 @@ export default function Quiz({ exam }: { exam: Exam }) {
   return (
     <div className="space-y-6 max-w-3xl mx-auto">
       {/* Top Header Controls */}
-      <div className="rounded-2xl glass-panel p-4 flex flex-col sm:flex-row items-center justify-between gap-3 border border-emerald-800/40">
+      <div className="rounded-2xl glass-panel p-4 flex flex-col sm:flex-row items-center justify-between gap-3 border border-[color:var(--color-line)]/[0.4]">
         <div>
-          <h1 className="text-lg sm:text-xl font-black text-white">{exam.title}</h1>
-          <div className="flex items-center gap-2 text-xs text-mute mt-1">
-            <span className="font-semibold text-emerald-300">السؤال {i + 1} من {items.length}</span>
+          <h1 className="text-lg sm:text-xl font-black text-[color:var(--color-text)]">{exam.title}</h1>
+          <div className="flex items-center gap-2 text-xs text-[color:var(--color-mute)] mt-1">
+            <span className="font-semibold text-[color:var(--color-hd)]">السؤال {i + 1} من {items.length}</span>
             {mode === "exam" && (
               <>
                 <span>•</span>
-                <span className={`font-mono font-bold px-2 py-0.5 rounded ${left < 120 ? "bg-rose-950 text-rose-400 border border-rose-800/60 animate-pulse" : "bg-emerald-950 text-emerald-300 border border-emerald-800/40"}`}>
+                <span className={`font-mono font-bold px-2 py-0.5 rounded ${left < 120 ? "bg-[color:var(--color-bad)]/[0.1] text-[color:var(--color-bad)] border border-[color:var(--color-bad)]/[0.6] animate-pulse" : "bg-[color:var(--color-bg-dark)]/[0.2] text-[color:var(--color-hd)] border border-[color:var(--color-line)]/[0.5]"}`}>
                   ⏱️ {fmt(left)}
                 </span>
               </>
@@ -229,43 +243,47 @@ export default function Quiz({ exam }: { exam: Exam }) {
         </div>
 
         <button
+          type="button"
           onClick={() => {
             const un = items.length - answeredCount;
             if (confirm(un ? `لديك ${un} سؤالاً لم تجب عليه. إنهاء الاختبار؟` : "إنهاء الاختبار؟")) {
               finish();
             }
           }}
-          className="w-full sm:w-auto px-4 py-2 rounded-xl border border-rose-800/60 bg-rose-950/40 text-rose-300 hover:bg-rose-900/50 text-xs font-bold transition-colors"
+          className="w-full sm:w-auto px-5 py-3 rounded-xl border border-[color:var(--color-bad)]/[0.7] bg-[color:var(--color-bad)]/[0.2] text-[color:var(--color-bad)] hover:bg-[color:var(--color-bad)]/[0.4] text-xs font-bold transition-colors active:opacity-85"
         >
           إنهاء الاختبار 🏁
         </button>
       </div>
 
       {/* Main Question Card */}
-      <div className="rounded-3xl glass-panel p-6 sm:p-8 space-y-6 border border-emerald-800/40 shadow-xl">
+      <div className="rounded-3xl glass-panel p-6 sm:p-8 space-y-6 border border-[color:var(--color-line)]/[0.4] shadow-xl">
         <div className="space-y-1.5">
-          <div className="flex justify-between text-xs text-mute font-medium">
+          <div className="flex justify-between text-xs text-[color:var(--color-mute)] font-medium">
             <span>إنجاز الإجابات</span>
-            <span className="text-emerald-300 font-bold">{progressPct}%</span>
+            <span className="text-[color:var(--color-hd)] font-bold">{progressPct}%</span>
           </div>
-          <div className="h-2 w-full overflow-hidden rounded-full bg-card2/80">
-            <div className="h-full bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full transition-all" style={{ width: `${progressPct}%` }} />
+          <div className="h-2 w-full overflow-hidden rounded-full bg-[color:var(--color-card2)]/[0.8]">
+            <div
+              className="h-full rounded-full transition-all"
+              style={{ width: `${progressPct}%`, background: 'linear-gradient(to right, var(--color-pri), var(--color-pri-hover))' }}
+            />
           </div>
         </div>
 
-        <p className="text-lg sm:text-xl font-extrabold text-white leading-relaxed">{q.text}</p>
+        <p className="text-lg sm:text-xl font-extrabold text-[color:var(--color-text)] leading-relaxed">{q.text}</p>
 
         {/* Options */}
         <div className="space-y-2.5">
           {q.options.map((t, k) => {
             const isChosen = a === k;
-            let btnStyle = "border-emerald-900/40 bg-card2/60 hover:bg-card2 text-white";
+            let btnStyle = "border-[color:var(--color-line)]/[0.4] bg-[color:var(--color-card2)]/[0.6] hover:bg-[color:var(--color-card2)] text-[color:var(--color-text)]";
             if (show) {
-              if (k === q.correct) btnStyle = "border-emerald-500 bg-emerald-950/70 text-emerald-200";
-              else if (isChosen) btnStyle = "border-rose-500 bg-rose-950/70 text-rose-200";
-              else btnStyle = "border-emerald-950/40 bg-card2/30 text-mute opacity-60";
+              if (k === q.correct) btnStyle = "border-[color:var(--color-ok)] bg-[color:var(--color-ok)]/[0.15] text-[color:var(--color-text)]";
+              else if (isChosen) btnStyle = "border-[color:var(--color-bad)] bg-[color:var(--color-bad)]/[0.15] text-[color:var(--color-text)]";
+              else btnStyle = "border-[color:var(--color-line)]/[0.2] bg-[color:var(--color-card2)]/[0.2] text-[color:var(--color-mute)] opacity-60";
             } else if (isChosen) {
-              btnStyle = "border-emerald-400 bg-emerald-950/80 text-white shadow-lg";
+              btnStyle = "border-[color:var(--color-hd)] bg-[color:var(--color-card)] text-[color:var(--color-text)] shadow-lg";
             }
 
             return (
@@ -275,7 +293,7 @@ export default function Quiz({ exam }: { exam: Exam }) {
                 onClick={() => setAns({ ...ans, [i]: k })}
                 className={`flex w-full items-center gap-3.5 rounded-2xl border-2 p-4 text-start transition-all ${btnStyle}`}
               >
-                <span className={`w-6 h-6 flex-shrink-0 rounded-full border-2 flex items-center justify-center text-xs font-bold ${isChosen || (show && k === q.correct) ? "border-emerald-400 bg-emerald-400 text-black" : "border-mute/50"}`}>
+                <span className={`w-6 h-6 flex-shrink-0 rounded-full border-2 flex items-center justify-center text-xs font-bold ${isChosen || (show && k === q.correct) ? "border-[color:var(--color-hd)] bg-[color:var(--color-hd)] text-[color:var(--color-bg)]" : "border-[color:var(--color-mute)]/[0.5]"}`}>
                   {show && k === q.correct ? "✓" : isChosen ? "✓" : ""}
                 </span>
                 <span className="text-sm sm:text-base font-medium">{t}</span>
@@ -285,31 +303,31 @@ export default function Quiz({ exam }: { exam: Exam }) {
         </div>
 
         {show && q.explanation && (
-          <div className="rounded-2xl bg-card2/90 border border-emerald-800/40 p-4 text-xs sm:text-sm text-emerald-100/90">
-            <b className="text-emerald-300 block mb-1">💡 التوضيح:</b>
+          <div className="rounded-2xl bg-[color:var(--color-card2)]/[0.9] border border-[color:var(--color-line)]/[0.4] p-4 text-xs sm:text-sm text-[color:var(--color-text)]">
+            <b className="text-[color:var(--color-hd)] block mb-1">💡 التوضيح:</b>
             {q.explanation}
           </div>
         )}
 
         <div className="pt-2 flex items-center justify-between gap-2">
           <div className="flex gap-2">
-            <button disabled={i === 0} onClick={() => setI(i - 1)} className="rounded-xl px-4 py-2.5 font-bold text-xs border border-emerald-900/60 bg-card2/60 disabled:opacity-30">← السابق</button>
-            <button disabled={i === items.length - 1} onClick={() => setI(i + 1)} className="rounded-xl px-5 py-2.5 font-bold text-xs bg-emerald-600 text-white disabled:opacity-30">التالي →</button>
+            <button disabled={i === 0} onClick={() => setI(i - 1)} className="rounded-xl px-4 py-2.5 font-bold text-xs border border-[color:var(--color-line)]/[0.6] bg-[color:var(--color-card2)]/[0.6] text-[color:var(--color-text)] disabled:opacity-30">← السابق</button>
+            <button disabled={i === items.length - 1} onClick={() => setI(i + 1)} className="rounded-xl px-5 py-2.5 font-bold text-xs bg-[color:var(--color-pri)] hover:bg-[color:var(--color-pri-hover)] text-[color:var(--color-bg)] disabled:opacity-30">التالي →</button>
           </div>
-          <button onClick={() => setFlag({ ...flag, [i]: !flag[i] })} className={`rounded-xl px-3.5 py-2.5 font-semibold text-xs border ${flag[i] ? "border-amber-400 bg-amber-950/40 text-amber-300" : "border-emerald-900 text-mute"}`}>
+          <button onClick={() => setFlag({ ...flag, [i]: !flag[i] })} className={`rounded-xl px-3.5 py-2.5 font-semibold text-xs border ${flag[i] ? "border-[color:var(--color-amber)] bg-[color:var(--color-amber)]/[0.1] text-[color:var(--color-amber)]" : "border-[color:var(--color-line)] text-[color:var(--color-mute)]"}`}>
             {flag[i] ? "⚑ معلّم للمراجعة" : "⚐ علّم للمراجعة"}
           </button>
         </div>
       </div>
 
       {/* Grid */}
-      <div className="rounded-3xl glass-panel p-5 space-y-3 border border-emerald-800/40">
-        <b className="text-sm font-bold text-white block">خارطة الأسئلة:</b>
+      <div className="rounded-3xl glass-panel p-5 space-y-3 border border-[color:var(--color-line)]/[0.4]">
+        <b className="text-sm font-bold text-[color:var(--color-text)] block">خارطة الأسئلة:</b>
         <div className="grid grid-cols-6 sm:grid-cols-10 gap-2">
           {items.map((_, n) => (
-            <button key={n} onClick={() => setI(n)} className={`relative h-10 rounded-xl border-2 text-xs font-bold transition-all flex items-center justify-center ${n === i ? "bg-emerald-600 border-emerald-400 text-white" : ans[n] !== undefined ? "bg-card2 border-emerald-500 text-emerald-300" : "bg-card2/60 border-emerald-900/40 text-mute"}`}>
+            <button key={n} onClick={() => setI(n)} className={`relative h-10 rounded-xl border-2 text-xs font-bold transition-all flex items-center justify-center ${n === i ? "bg-[color:var(--color-pri)] border-[color:var(--color-hd)] text-[color:var(--color-bg)]" : ans[n] !== undefined ? "bg-[color:var(--color-card2)] border-[color:var(--color-pri)] text-[color:var(--color-hd)]" : "bg-[color:var(--color-card2)]/[0.6] border-[color:var(--color-line)]/[0.4] text-[color:var(--color-mute)]"}`}>
               {n + 1}
-              {flag[n] && <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-amber-400 border border-black" />}
+              {flag[n] && <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-[color:var(--color-amber)] border border-[color:var(--color-bg)]" />}
             </button>
           ))}
         </div>

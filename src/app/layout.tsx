@@ -17,37 +17,43 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ar" dir="rtl">
-      <body className={`${font.className} flex flex-col min-h-screen antialiased`}>
+      <body className={`${font.className} flex flex-col min-h-screen antialiased text-[color:var(--color-text)]`}>
         {/* Top Announcement Bar */}
-        <div className="bg-gradient-to-r from-emerald-950/80 via-emerald-900/40 to-teal-950/80 border-b border-emerald-800/40 px-4 py-1.5 text-xs text-center text-emerald-200/90 font-medium tracking-wide">
-          <span>🇸🇦 تدرّب مجاناً على اختبارات الاعتماد المهني السعودي المعتمدة للمهن والعمالة الوافدة</span>
+        <div className="bg-[color:var(--color-bg-dark)]/[0.1] border-b border-[color:var(--color-line)]/[0.4] px-4 py-1.5 text-xs text-center text-[color:var(--color-text-light)] font-medium tracking-wide">
+          <span>🇸🇦 تدرّب مجاناً على نماذج اختبارات الاعتماد المهني السعودي للمهن والعمالة الوافدة</span>
         </div>
 
         {/* Modern Sticky Navigation */}
-        <header className="sticky top-0 z-50 glass-panel border-b border-emerald-900/50 transition-all duration-300">
+        <header className="sticky top-0 z-50 glass-panel border-b border-[color:var(--color-line)]/[0.5] transition-all duration-300">
           <div className="mx-auto max-w-5xl px-4 sm:px-6 h-16 flex items-center justify-between">
             <Link href="/" className="group flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-400 to-teal-600 flex items-center justify-center shadow-lg shadow-emerald-500/20 group-hover:scale-105 transition-transform duration-200">
+              <div 
+                className="w-10 h-10 rounded-xl flex items-center justify-center shadow-lg shadow-[color:var(--color-pri)]/[0.2] group-hover:scale-105 transition-transform duration-200"
+                style={{ background: 'linear-gradient(to bottom right, var(--color-pri), var(--color-pri2))' }}
+              >
                 <span className="text-xl">🎯</span>
               </div>
               <div className="flex flex-col">
-                <span className="text-xl font-black bg-gradient-to-r from-teal-200 via-emerald-300 to-teal-400 bg-clip-text text-transparent group-hover:brightness-110 transition-all">
+                <span 
+                  className="text-xl font-black bg-clip-text text-transparent group-hover:brightness-110 transition-all"
+                  style={{ backgroundImage: 'linear-gradient(to right, var(--color-hd), var(--color-pri-hover), var(--color-pri))' }}
+                >
                   {SITE.name}
                 </span>
-                <span className="text-[11px] text-mute -mt-1 font-medium">بوابتك للنجاح المهني</span>
+                <span className="text-[11px] text-[color:var(--color-mute)] -mt-1 font-medium">بوابتك للنجاح المهني</span>
               </div>
             </Link>
 
             <nav className="flex items-center gap-3">
               <Link 
                 href="/" 
-                className="px-3.5 py-1.5 rounded-lg text-sm font-semibold text-emerald-100 hover:text-white hover:bg-emerald-900/40 transition-colors"
+                className="px-3.5 py-1.5 rounded-lg text-sm font-semibold text-[color:var(--color-text)] hover:text-[color:var(--color-text-light)] hover:bg-[color:var(--color-bg-dark)]/[0.15] transition-colors"
               >
                 الرئيسية
               </Link>
               <Link 
                 href="/admin" 
-                className="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-mute hover:text-teal-300 hover:bg-emerald-950/50 border border-emerald-900/40 transition-all"
+                className="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-[color:var(--color-mute)] hover:text-[color:var(--color-hd)] hover:bg-[color:var(--color-bg-dark)]/[0.2] border border-[color:var(--color-line)]/[0.4] transition-all"
               >
                 لوحة التحكم
               </Link>
@@ -61,20 +67,20 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </main>
 
         {/* Modern Polished Footer */}
-        <footer className="mt-auto border-t border-emerald-950 bg-black/40 backdrop-blur-md">
+        <footer className="mt-auto border-t border-[color:var(--color-line)]/[0.2] bg-[color:var(--color-bg-dark)]/[0.2] backdrop-blur-md">
           <div className="mx-auto max-w-5xl px-4 sm:px-6 py-8">
             <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-right">
               <div>
                 <div className="flex items-center justify-center md:justify-start gap-2 mb-1">
-                  <span className="text-base font-bold text-emerald-300">{SITE.name}</span>
-                  <span className="text-xs px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-800/40">نسخة تدريبية</span>
+                  <span className="text-base font-bold text-[color:var(--color-hd)]">{SITE.name}</span>
+                  <span className="text-xs px-2 py-0.5 rounded-full bg-[color:var(--color-bg-dark)]/[0.2] text-[color:var(--color-hd)]/[0.8] border border-[color:var(--color-line)]/[0.4]">نسخة تدريبية</span>
                 </div>
-                <p className="text-xs text-mute max-w-md">
+                <p className="text-xs text-[color:var(--color-mute)] max-w-md">
                   موقع تدريبي مستقل، وليس تابعاً للجهة الرسمية المنظِّمة للاختبار المهني. الأسئلة للتدريب والمراجعة فقط لزيادة فرصك في اجتياز الاختبار الرسمي.
                 </p>
               </div>
 
-              <div className="flex items-center gap-3 text-xs text-mute">
+              <div className="flex items-center gap-3 text-xs text-[color:var(--color-mute)]">
                 <span>تحديث مستمر للأسئلة</span>
                 <span>•</span>
                 <span>تصحيح فوري ومجاني</span>

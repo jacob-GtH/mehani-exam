@@ -22,7 +22,7 @@ export default function QuestionForm({ examId, initial }: { examId: string; init
       <p className="text-sm text-mute">الخيارات — حدّد الدائرة بجانب الإجابة الصحيحة</p>
       {opts.map((o, i) => (
         <div key={i} className="flex items-center gap-2">
-          <input type="radio" checked={correct === i} onChange={() => setCorrect(i)} aria-label="الإجابة الصحيحة" className="h-5 w-5 flex-none accent-green-500" />
+          <input type="radio" checked={correct === i} onChange={() => setCorrect(i)} aria-label="الإجابة الصحيحة" className="h-5 w-5 flex-none accent-[color:var(--color-ok)]" />
           <input value={o} onChange={(e) => setOpts(opts.map((x, k) => (k === i ? e.target.value : x)))} placeholder={`الخيار ${i + 1}`} className={inp} />
           {opts.length > 2 && <button type="button" onClick={() => rm(i)} aria-label="حذف الخيار" className="rounded-lg border border-line px-3 py-2">✕</button>}
         </div>

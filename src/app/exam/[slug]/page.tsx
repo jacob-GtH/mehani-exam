@@ -79,8 +79,8 @@ export default async function ExamPage({ params }: P) {
         {/* CTA Button */}
         <Link
           href={`/exam/${slug}/start`}
-          className="flex items-center justify-center gap-2 w-full rounded-2xl text-[color:var(--color-bg)] py-4 px-6 font-black text-lg shadow-lg shadow-[color:var(--color-pri)]/[0.3] transition-all hover:scale-[1.01] active:scale-[0.99]"
-          style={{ background: 'linear-gradient(to right, var(--color-pri), var(--color-pri-hover))' }}
+          className="flex items-center justify-center gap-2 w-full rounded-2xl text-gold py-4 px-6 font-black text-lg shadow-lg shadow-[color:var(--color-gold)]/[0.35] transition-colors hover:brightness-105 active:opacity-90"
+          style={{ color: 'var(--color-gold)', background: 'linear-gradient(to right, var(--color-pri), var(--color-pri-hover))' }}
         >
           <span>بدء الاختبار الآن</span>
           <span className="text-xl">←</span>

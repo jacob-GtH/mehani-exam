@@ -19,9 +19,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="ar" dir="rtl">
       <body className={`${font.className} flex flex-col min-h-screen antialiased text-[color:var(--color-text)]`}>
         {/* Top Announcement Bar */}
-        <div className="bg-[color:var(--color-bg-dark)]/[0.1] border-b border-[color:var(--color-line)]/[0.4] px-4 py-1.5 text-xs text-center text-[color:var(--color-text-light)] font-medium tracking-wide">
-          <span>🇸🇦 تدرّب مجاناً على نماذج اختبارات الاعتماد المهني السعودي للمهن والعمالة الوافدة</span>
-        </div>
+
 
         {/* Modern Sticky Navigation */}
         <header className="sticky top-0 z-50 glass-panel border-b border-[color:var(--color-line)]/[0.5] transition-all duration-300">
@@ -51,15 +49,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               >
                 الرئيسية
               </Link>
-              <Link 
-                href="/admin" 
-                className="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-[color:var(--color-mute)] hover:text-[color:var(--color-hd)] hover:bg-[color:var(--color-bg-dark)]/[0.2] border border-[color:var(--color-line)]/[0.4] transition-all"
-              >
-                لوحة التحكم
-              </Link>
+
             </nav>
           </div>
         </header>
+        
+        <div className="bg-[color:var(--color-bg-dark)]/[0.1] border-b border-[color:var(--color-line)]/[0.4] px-4 py-1.5 text-xs text-center text-[color:var(--color-text-light)] font-medium tracking-wide">
+          <span>🇸🇦 تدرّب مجاناً على نماذج اختبارات الاعتماد المهني السعودي للمهن والعمالة الوافدة</span>
+        </div>
 
         {/* Main Content Area */}
         <main className="flex-1 mx-auto max-w-5xl w-full px-4 sm:px-6 py-8 md:py-12">

@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import type { Exam, Q } from "@/lib/data";
+import ConfirmModal from "@/components/ui/ConfirmModal";
 
 type Item = { key: string; text: string; options: string[]; correct: number; explanation?: string };
 const shuffle = <T,>(a: T[]) => { const r = [...a]; for (let i = r.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [r[i], r[j]] = [r[j], r[i]]; } return r; };
@@ -20,6 +21,7 @@ export default function Quiz({ exam }: { exam: Exam }) {
   const t0 = useRef(0);
   const done = useRef(false);
   const fin = useRef(() => {});
+  const [confirmExit, setConfirmExit] = useState(false);
 
   const start = (src: Q[]) => {
     if (!src || !src.length) return;
@@ -244,12 +246,7 @@ export default function Quiz({ exam }: { exam: Exam }) {
 
         <button
           type="button"
-          onClick={() => {
-            const un = items.length - answeredCount;
-            if (confirm(un ? `لديك ${un} سؤالاً لم تجب عليه. إنهاء الاختبار؟` : "إنهاء الاختبار؟")) {
-              finish();
-            }
-          }}
+          onClick={() => setConfirmExit(true)}
           className="w-full sm:w-auto px-5 py-3 rounded-xl border border-[color:var(--color-bad)]/[0.7] bg-[color:var(--color-bad)]/[0.2] text-[color:var(--color-bad)] hover:bg-[color:var(--color-bad)]/[0.4] text-xs font-bold transition-colors active:opacity-85"
         >
           إنهاء الاختبار 🏁
@@ -332,6 +329,24 @@ export default function Quiz({ exam }: { exam: Exam }) {
           ))}
         </div>
       </div>
+
+      <ConfirmModal
+        open={confirmExit}
+        title="إنهاء الاختبار"
+        message={
+          items.length - Object.keys(ans).length
+            ? `لديك ${items.length - Object.keys(ans).length} سؤالاً لم تجب عليه بعد. هل تريد بالفعل إنهاء الاختبار وعرض النتيجة؟`
+            : "هل أنت متأكد من إنهاء الاختبار وتسليم الإجابات؟"
+        }
+        confirmLabel="نعم، إنهاء الاختبار"
+        cancelLabel="متابعة الحل"
+        tone="danger"
+        onConfirm={() => {
+          setConfirmExit(false);
+          finish();
+        }}
+        onCancel={() => setConfirmExit(false)}
+      />
     </div>
   );
 }

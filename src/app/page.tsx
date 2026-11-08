@@ -27,7 +27,7 @@ export default async function Home() {
 
       {/* Hero Section */}
       <section className="text-center relative py-6 md:py-8">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[color:var(--color-bg-dark)]/[0.8] border border-[color:var(--color-pri)]/[0.3] text-[color:var(--color-line)] text-xs md:text-sm font-semibold mb-6">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[color:var(--color-bg-dark)]/[0.8] border border-[color:var(--color-pri)]/[0.3] text-[color:var(--color-gold)] text-xs md:text-sm font-semibold mb-6">
           <span className="w-2 h-2 rounded-full bg-[color:var(--color-line)]/[1] animate-ping" />
           <span>تحديثات مستمرة لأسئلة الاختبارات المهنية</span>
         </div>
@@ -46,9 +46,11 @@ export default async function Home() {
         </p>
 
         <div className="mt-6 grid grid-cols-2 sm:grid-cols-3 gap-3 max-w-xl mx-auto text-xs md:text-sm font-medium">
-          <div className="p-3 rounded-xl glass-card flex items-center justify-center gap-2 text-[color:var(--color-text-light)]">
+          <Link
+          href="https://wa.me/777829664"
+           className="p-3 rounded-xl glass-card flex items-center justify-center gap-2 text-[color:var(--color-text-light)]">
             <span>⏱️</span> محاكاة بوقت
-          </div>
+          </Link>
           <div className="p-3 rounded-xl glass-card flex items-center justify-center gap-2 text-[color:var(--color-text-light)]">
             <span>💡</span> شروحات تفصيلية
           </div>

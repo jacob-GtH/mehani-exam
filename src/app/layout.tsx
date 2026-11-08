@@ -9,7 +9,7 @@ const font = Tajawal({ subsets: ["arabic"], weight: ["400", "500", "700", "800"]
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
   title: { default: `${SITE.name} | منصة محاكاة اختبارات الاعتماد المهني السعودي`, template: `%s | ${SITE.name}` },
-  description: "اختبارات تجريبية مجانية للاعتماد المهني السعودي بأسئلة اختيار من متعدد وتصحيح فوري ومراجعة للأخطاء.",
+  description: "تدرّب على نماذج اختبارات الاعتماد المهني السعودي، واختبر جاهزيتك من خلال أسئلة اختيار من متعدد وشرح للإجابات.",
   openGraph: { locale: "ar_SA", type: "website", siteName: SITE.name },
   alternates: { canonical: "/" },
 };
@@ -17,71 +17,40 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ar" dir="rtl">
-      <body className={`${font.className} flex flex-col min-h-screen antialiased text-[color:var(--color-text)]`}>
-        {/* Top Announcement Bar */}
-
-
-        {/* Modern Sticky Navigation */}
-        <header className="sticky top-0 z-50 glass-panel border-b border-[color:var(--color-line)]/[0.5] transition-all duration-300">
-          <div className="mx-auto max-w-5xl px-4 sm:px-6 h-16 flex items-center justify-between">
-            <Link href="/" className="group flex items-center gap-3">
-              <div 
-                className="w-10 h-10 rounded-xl flex items-center justify-center shadow-lg shadow-[color:var(--color-pri)]/[0.2] group-hover:scale-105 transition-transform duration-200"
-                style={{ background: 'linear-gradient(to bottom right, var(--color-pri), var(--color-pri2))' }}
-              >
-                <span className="text-xl">🎯</span>
-              </div>
-              <div className="flex flex-col">
-                <span 
-                  className="text-xl font-black bg-clip-text text-transparent group-hover:brightness-110 transition-all"
-                  style={{ backgroundImage: 'linear-gradient(to right, var(--color-hd), var(--color-pri-hover), var(--color-pri))' }}
-                >
-                  {SITE.name}
-                </span>
-                <span className="text-[11px] text-[color:var(--color-mute)] -mt-1 font-medium">بوابتك للنجاح المهني</span>
-              </div>
+      <body className={`${font.className} flex min-h-screen flex-col antialiased`}>
+        <header className="sticky top-0 z-50 border-b border-[color:var(--color-line)]/80 bg-white/90 backdrop-blur-xl">
+          <div className="mx-auto flex h-[76px] max-w-6xl items-center justify-between px-4 sm:px-6">
+            <Link href="/" className="group flex items-center gap-3" aria-label={`${SITE.name} - الرئيسية`}>
+              <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[color:var(--color-bg-dark)] text-lg font-black text-white shadow-lg shadow-emerald-950/10 transition-transform group-hover:-rotate-3">م</span>
+              <span className="flex flex-col leading-tight">
+                <span className="text-xl font-extrabold tracking-tight text-[color:var(--color-hd)]">{SITE.name}</span>
+                <span className="mt-1 text-[11px] font-medium text-[color:var(--color-mute)]">استعد لاختبارك بثقة</span>
+              </span>
             </Link>
-
-            <nav className="flex items-center gap-3">
-              <Link 
-                href="/" 
-                className="px-3.5 py-1.5 rounded-lg text-sm font-semibold text-[color:var(--color-text)] hover:text-[color:var(--color-text-light)] hover:bg-[color:var(--color-bg-dark)]/[0.15] transition-colors"
-              >
-                الرئيسية
-              </Link>
-
+            <nav aria-label="التنقل الرئيسي" className="flex items-center gap-2">
+              <Link href="/" className="rounded-xl px-4 py-2 text-sm font-bold text-[color:var(--color-pri)] transition hover:bg-[color:var(--color-card2)]">الرئيسية</Link>
+              <Link href="/#exams" className="hidden rounded-xl px-4 py-2 text-sm font-semibold text-[color:var(--color-text-light)] transition hover:bg-[color:var(--color-card2)] hover:text-[color:var(--color-hd)] sm:inline-flex">الاختبارات</Link>
             </nav>
           </div>
         </header>
-        
-        <div className="bg-[color:var(--color-bg-dark)]/[0.1] border-b border-[color:var(--color-line)]/[0.4] px-4 py-1.5 text-xs text-center text-[color:var(--color-text-light)] font-medium tracking-wide">
-          <span>🇸🇦 تدرّب مجاناً على نماذج اختبارات الاعتماد المهني السعودي للمهن والعمالة الوافدة</span>
+
+        <div className="border-b border-emerald-900/10 bg-[#EAF2ED] px-4 py-2 text-center text-xs font-medium text-[#426357]">
+          منصة تدريبية مستقلة لاختبارات الاعتماد المهني السعودي
         </div>
 
-        {/* Main Content Area */}
-        <main className="flex-1 mx-auto max-w-5xl w-full px-4 sm:px-6 py-8 md:py-12">
-          {children}
-        </main>
+        <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 sm:px-6 md:py-12">{children}</main>
 
-        {/* Modern Polished Footer */}
-        <footer className="mt-auto border-t border-[color:var(--color-line)]/[0.2] bg-[color:var(--color-bg-dark)]/[0.2] backdrop-blur-md">
-          <div className="mx-auto max-w-5xl px-4 sm:px-6 py-8">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-right">
-              <div>
-                <div className="flex items-center justify-center md:justify-start gap-2 mb-1">
-                  <span className="text-base font-bold text-[color:var(--color-hd)]">{SITE.name}</span>
-                  <span className="text-xs px-2 py-0.5 rounded-full bg-[color:var(--color-bg-dark)]/[0.2] text-[color:var(--color-hd)]/[0.8] border border-[color:var(--color-line)]/[0.4]">نسخة تدريبية</span>
-                </div>
-                <p className="text-xs text-[color:var(--color-mute)] max-w-md">
-                  موقع تدريبي مستقل، وليس تابعاً للجهة الرسمية المنظِّمة للاختبار المهني. الأسئلة للتدريب والمراجعة فقط لزيادة فرصك في اجتياز الاختبار الرسمي.
-                </p>
+        <footer className="mt-12 border-t border-[color:var(--color-line)] bg-white">
+          <div className="mx-auto flex max-w-6xl flex-col gap-5 px-4 py-8 sm:px-6 md:flex-row md:items-center md:justify-between">
+            <div className="max-w-xl">
+              <div className="mb-2 flex items-center gap-2">
+                <span className="text-base font-extrabold text-[color:var(--color-hd)]">{SITE.name}</span>
+                <span className="rounded-full bg-[color:var(--color-card2)] px-2.5 py-1 text-[10px] font-bold text-[color:var(--color-text-light)]">منصة تدريبية</span>
               </div>
-
-              <div className="flex items-center gap-3 text-xs text-[color:var(--color-mute)]">
-                <span>تحديث مستمر للأسئلة</span>
-                <span>•</span>
-                <span>تصحيح فوري ومجاني</span>
-              </div>
+              <p className="text-xs leading-6 text-[color:var(--color-mute)]">موقع تدريبي مستقل، وليس تابعاً للجهة الرسمية المنظِّمة للاختبار المهني. الأسئلة للتدريب والمراجعة فقط.</p>
+            </div>
+            <div className="flex flex-wrap items-center gap-3 text-xs font-medium text-[color:var(--color-mute)]">
+              <span>تدريب مجاني</span><span aria-hidden="true">•</span><span>شروحات للإجابات</span><span aria-hidden="true">•</span><span>محاولات متعددة</span>
             </div>
           </div>
         </footer>
@@ -89,4 +58,3 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     </html>
   );
 }
-

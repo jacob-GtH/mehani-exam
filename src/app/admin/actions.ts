@@ -4,6 +4,8 @@ import { redirect } from "next/navigation";
 import { writer } from "@/lib/sanity";
 import { parseQuestions } from "@/lib/parse";
 import { clearSession, passwordOk, requireAdmin, setSession } from "@/lib/auth";
+import { checkRateLimit } from "@/lib/rate-limit";
+import { headers } from "next/headers";
 
 const refresh = () => revalidatePath("/", "layout");
 const keyOk = (k: string) => /^[A-Za-z0-9_-]{1,64}$/.test(k);
@@ -11,7 +13,12 @@ const slugify = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").repla
 const rnd = () => Math.random().toString(36).slice(2, 8);
 
 export async function login(_: string | null, fd: FormData): Promise<string | null> {
-  if (!passwordOk(String(fd.get("password") || ""))) return "كلمة المرور غير صحيحة";
+  const requestHeaders = await headers();
+  const ip = requestHeaders.get("x-forwarded-for")?.split(",")[0]?.trim() || requestHeaders.get("x-real-ip") || "unknown";
+  const rate = checkRateLimit(`admin-login:${ip}`, 5, 15 * 60_000);
+  if (!rate.allowed) return "تم تجاوز عدد محاولات الدخول. حاول بعد 15 دقيقة.";
+  const password = String(fd.get("password") || "");
+  if (password.length > 256 || !passwordOk(password)) return "كلمة المرور غير صحيحة";
   await setSession();
   redirect("/admin");
 }

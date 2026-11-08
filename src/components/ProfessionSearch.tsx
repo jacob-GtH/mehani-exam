@@ -47,7 +47,7 @@ export default function ProfessionSearch({ exams }: { exams: Exam[] }) {
               <ul className="divide-y divide-[color:var(--color-line)]">
                 {filtered.map((exam: Exam) => (
                   <li key={exam._id}>
-                    <Link href={`/exam/${exam.slug}`} className="flex items-center justify-between gap-4 px-5 py-4 transition hover:bg-[#F2F6F1] focus:bg-[#F2F6F1] focus:outline-none">
+                    <Link href={`/exam/${exam.slug}`} onMouseDown={(event) => event.preventDefault()} className="flex items-center justify-between gap-4 px-5 py-4 transition hover:bg-[#F2F6F1] focus:bg-[#F2F6F1] focus:outline-none">
                       <span className="min-w-0">
                         <span className="block truncate text-sm font-extrabold text-[color:var(--color-hd)]">{exam.title}</span>
                         <span className="mt-1 block text-xs text-[color:var(--color-text-light)]">{exam.count} سؤال تدريبي</span>

@@ -8,10 +8,26 @@ const font = Tajawal({ subsets: ["arabic"], weight: ["400", "500", "700", "800"]
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
-  title: { default: `${SITE.name} | منصة محاكاة اختبارات الاعتماد المهني السعودي`, template: `%s | ${SITE.name}` },
-  description: "تدرّب على نماذج اختبارات الاعتماد المهني السعودي، واختبر جاهزيتك من خلال أسئلة اختيار من متعدد وشرح للإجابات.",
-  openGraph: { locale: "ar_SA", type: "website", siteName: SITE.name },
-  alternates: { canonical: "/" },
+  title: {
+    default: `${SITE.name} | التدريب على الاختبارات المهنية في اليمن`,
+    template: `%s | ${SITE.name}`,
+  },
+  description: "منصة تدريبية تساعد المتقدمين في اليمن على الاستعداد للاختبارات المهنية من خلال نماذج أسئلة تفاعلية، ومحاكاة للاختبار، ومراجعة الإجابات والشروحات.",
+  applicationName: SITE.name,
+  category: "education",
+  openGraph: {
+    locale: SITE.locale,
+    type: "website",
+    siteName: SITE.name,
+    title: `${SITE.name} | التدريب على الاختبارات المهنية في اليمن`,
+    description: "تدرّب على نماذج مهنية، وقِس جاهزيتك، وراجع إجاباتك من خلال منصة تدريبية مستقلة.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${SITE.name} | التدريب على الاختبارات المهنية في اليمن`,
+    description: "نماذج تدريبية ومحاكاة للاختبارات المهنية ومراجعة الإجابات.",
+  },
+  robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 } },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -30,12 +46,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <nav aria-label="التنقل الرئيسي" className="flex items-center gap-2">
               <Link href="/" className="rounded-xl px-4 py-2 text-sm font-bold text-[color:var(--color-pri)] transition hover:bg-[color:var(--color-card2)]">الرئيسية</Link>
               <Link href="/#exams" className="hidden rounded-xl px-4 py-2 text-sm font-semibold text-[color:var(--color-text-light)] transition hover:bg-[color:var(--color-card2)] hover:text-[color:var(--color-hd)] sm:inline-flex">الاختبارات</Link>
+              <Link href="/guide/preparing-for-professional-exams" className="hidden rounded-xl px-4 py-2 text-sm font-semibold text-[color:var(--color-text-light)] transition hover:bg-[color:var(--color-card2)] hover:text-[color:var(--color-hd)] md:inline-flex">دليل الاستعداد</Link>
             </nav>
           </div>
         </header>
 
         <div className="border-b border-emerald-900/10 bg-[#EAF2ED] px-4 py-2 text-center text-xs font-medium text-[#426357]">
-          منصة تدريبية مستقلة لاختبارات الاعتماد المهني السعودي
+          منصة تدريبية مستقلة للاستعداد للاختبارات المهنية في اليمن
         </div>
 
         <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 sm:px-6 md:py-12">{children}</main>
@@ -48,6 +65,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <span className="rounded-full bg-[color:var(--color-card2)] px-2.5 py-1 text-[10px] font-bold text-[color:var(--color-text-light)]">منصة تدريبية</span>
               </div>
               <p className="text-xs leading-6 text-[color:var(--color-mute)]">موقع تدريبي مستقل، وليس تابعاً للجهة الرسمية المنظِّمة للاختبار المهني. الأسئلة للتدريب والمراجعة فقط.</p>
+              <Link href="/guide/preparing-for-professional-exams" className="mt-2 inline-flex text-xs font-bold text-[color:var(--color-pri)] hover:underline">دليل الاستعداد للاختبارات المهنية</Link>
             </div>
             <div className="flex flex-wrap items-center gap-3 text-xs font-medium text-[color:var(--color-mute)]">
               <span>تدريب مجاني</span><span aria-hidden="true">•</span><span>شروحات للإجابات</span><span aria-hidden="true">•</span><span>محاولات متعددة</span>

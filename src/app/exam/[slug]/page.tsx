@@ -16,13 +16,14 @@ export async function generateMetadata({ params }: P): Promise<Metadata> {
   const { slug } = await params;
   const exam = await getExamLanding(slug);
   if (!exam) return {};
-  const title = `اختبار ${exam.title} التجريبي — ${exam.count} سؤال مع الشرح`;
-  const description = `استعد لاختبار ${exam.title} من خلال ${exam.count} سؤالاً تدريبياً. اختر وضع التدريب أو محاكاة الاختبار، وتعرّف على نتيجتك.`;
+  const title = `اختبار ${exam.title} في اليمن | نموذج تدريبي ومحاكاة`;
+  const description = `تدرّب على اختبار ${exam.title} من خلال ${exam.count} سؤالاً تدريبياً، وجرّب المحاكاة الزمنية، وراجع إجاباتك لتقييم استعدادك. محتوى تدريبي مستقل وليس اختباراً رسمياً.`;
   return {
     title,
     description,
     alternates: { canonical: `/exam/${slug}` },
-    openGraph: { title, description, url: `/exam/${slug}`, type: "article" },
+    openGraph: { title, description, url: `/exam/${slug}`, type: "article", locale: "ar_YE" },
+    twitter: { card: "summary", title, description },
   };
 }
 
@@ -89,7 +90,7 @@ export default async function ExamPage({ params }: P) {
               <span className="h-2 w-2 rounded-full bg-[#27815D]" /> نموذج تدريبي متاح
             </div>
             <div className="space-y-3">
-              <p className="text-sm font-bold text-[color:var(--color-pri)]">اختبارات الاعتماد المهني</p>
+              <p className="text-sm font-bold text-[color:var(--color-pri)]">نموذج تدريبي للمتقدمين في اليمن</p>
               <h1 className="max-w-2xl text-3xl font-black leading-[1.35] tracking-tight text-[color:var(--color-hd)] sm:text-4xl lg:text-[2.7rem]">
                 استعد لاختبار <span className="text-[color:var(--color-pri)]">{exam.title}</span> بثقة
               </h1>
@@ -101,7 +102,7 @@ export default async function ExamPage({ params }: P) {
               </Link>
               <Link href="/#exams" className="btn-secondary inline-flex min-h-14 items-center justify-center rounded-2xl px-6 text-sm font-bold">استكشف بقية المهن</Link>
             </div>
-            <p className="text-xs leading-6 text-[color:var(--color-mute)]">محتوى تدريبي مستقل للمراجعة والاستعداد، وليس اختباراً رسمياً أو بديلاً عن تعليمات الجهة المنظمة.</p>
+            <p className="text-xs leading-6 text-[color:var(--color-mute)]">محتوى تدريبي مستقل للمراجعة والاستعداد، وليس اختباراً رسمياً أو بديلاً عن تعليمات الجهة المنظمة. يُرجى الرجوع إلى الجهة المختصة للتحقق من الشروط والمواعيد المعتمدة.</p>
           </div>
 
           <div className="rounded-[1.75rem] border border-white/80 bg-[#102C2A] p-5 text-white shadow-xl shadow-emerald-950/15 sm:p-6">
@@ -164,6 +165,12 @@ export default async function ExamPage({ params }: P) {
           <div className="rounded-2xl border border-dashed border-[color:var(--color-line)] bg-white/60 p-4 text-center text-xs leading-6 text-[color:var(--color-mute)]">هذه معاينة لبعض الأسئلة فقط. ابدأ الاختبار للوصول إلى النموذج التدريبي.</div>
         </section>
       )}
+
+      <section className="rounded-2xl border border-[color:var(--color-line)] bg-[#F5F8F5] p-5 sm:p-6">
+        <h2 className="text-base font-extrabold">نصيحة للاستعداد</h2>
+        <p className="mt-2 text-sm leading-7 text-[color:var(--color-text-light)]">استخدم هذا النموذج لقياس مستواك وتحديد الموضوعات التي تحتاج إلى مراجعة، ثم ارجع إلى المراجع والتعليمات الرسمية الخاصة باختبارك.</p>
+        <Link href="/guide/preparing-for-professional-exams" className="mt-3 inline-flex text-sm font-extrabold text-[color:var(--color-pri)] hover:underline">اطّلع على دليل الاستعداد للاختبارات المهنية ←</Link>
+      </section>
 
       <section className="rounded-[1.75rem] border border-[color:var(--color-line)] bg-white p-6 sm:p-8">
         <div className="mb-5">

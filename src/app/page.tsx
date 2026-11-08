@@ -3,19 +3,38 @@ import { getExams } from "@/lib/data";
 import { SITE } from "@/lib/site";
 import ProfessionSearch from "@/components/ProfessionSearch";
 import type { Exam } from "@/lib/data";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "التدريب على الاختبارات المهنية في اليمن",
+  description: "استعد للاختبارات المهنية في اليمن عبر نماذج تدريبية تفاعلية، وأسئلة اختيار من متعدد، ومحاكاة زمنية، ومراجعة الإجابات والشروحات.",
+  alternates: { canonical: "/" },
+  openGraph: { title: "التدريب على الاختبارات المهنية في اليمن", description: "نماذج تدريبية ومحاكاة تساعدك على الاستعداد للاختبارات المهنية.", url: "/", type: "website" },
+};
 
 export const revalidate = 60;
 
 export default async function Home() {
   const exams: Exam[] = await getExams();
-  const ld = {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    name: SITE.name,
-    itemListElement: exams.map((e: Exam, i: number) => ({
-      "@type": "ListItem", position: i + 1, url: `${SITE.url}/exam/${e.slug}`, name: e.title,
-    })),
-  };
+  const ld = [
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      name: SITE.name,
+      url: SITE.url,
+      inLanguage: "ar",
+      description: "منصة تدريبية مستقلة للاستعداد للاختبارات المهنية في اليمن.",
+      audience: { "@type": "Audience", geographicArea: { "@type": "Country", name: "اليمن" } },
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      name: "الاختبارات المهنية التدريبية المتاحة",
+      itemListElement: exams.map((e: Exam, i: number) => ({
+        "@type": "ListItem", position: i + 1, url: `${SITE.url}/exam/${e.slug}`, name: e.title,
+      })),
+    },
+  ];
 
   return (
     <div className="space-y-16 md:space-y-20 ">
@@ -34,7 +53,7 @@ export default async function Home() {
             <span className="mt-1 block text-[#B9D6A9]">بمعرفة وثقة أكبر</span>
           </h1>
           <p className="mx-auto mt-5 max-w-2xl text-sm leading-8 text-[#D1DED7] sm:text-base">
-            تدرّب على نماذج أسئلة متنوعة، تعرّف على مستواك، وراجع الإجابات مع الشروحات لتكون أكثر استعداداً للاختبار.
+            منصة تدريبية مستقلة للمتقدمين في اليمن؛ تدرّب على نماذج أسئلة متنوعة، وقِس مستواك، وراجع الإجابات والشروحات لتستعد بصورة أفضل لاختبارك المهني.
           </p>
           <ProfessionSearch exams={exams} />
           <div className="mt-5 flex justify-center">
@@ -84,6 +103,19 @@ export default async function Home() {
             <p className="mt-2 text-sm">نعمل على إضافة نماذج مهنية جديدة. يرجى العودة لاحقاً.</p>
           </div>
         )}
+      </section>
+
+      <section className="grid gap-6 rounded-[1.75rem] border border-[color:var(--color-line)] bg-white p-6 sm:p-8 md:grid-cols-[1fr_auto] md:items-center">
+        <div>
+          <p className="text-xs font-extrabold tracking-wide text-[color:var(--color-pri)]">دليل الاستعداد</p>
+          <h2 className="mt-2 text-2xl font-extrabold tracking-tight">كيف تستعد لاختبارك المهني؟</h2>
+          <p className="mt-3 max-w-3xl text-sm leading-8 text-[color:var(--color-text-light)]">
+            ابدأ بتحديد موضوعات الاختبار ومتطلباته من الجهة المنظمة، ثم قسّم المراجعة إلى جلسات قصيرة، ودوّن النقاط التي تحتاج إلى تقوية. تساعدك النماذج التدريبية على التعرّف على نوعية الأسئلة وقياس تقدمك، لكنها لا تحل محل المراجع والتعليمات الرسمية.
+          </p>
+        </div>
+        <Link href="/guide/preparing-for-professional-exams" className="btn-secondary inline-flex min-h-12 items-center justify-center rounded-xl px-5 text-sm font-extrabold">
+          اقرأ دليل الاستعداد <span className="mr-2" aria-hidden="true">←</span>
+        </Link>
       </section>
 
       <section className="grid gap-4 md:grid-cols-3">

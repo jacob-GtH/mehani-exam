@@ -6,6 +6,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const exams = await getExams();
   return [
     { url: SITE.url, changeFrequency: "weekly", priority: 1 },
-    ...exams.map((e) => ({ url: `${SITE.url}/exam/${e.slug}`, lastModified: e._updatedAt, changeFrequency: "weekly" as const, priority: 0.8 })),
+    { url: `${SITE.url}/guide/preparing-for-professional-exams`, changeFrequency: "monthly", priority: 0.75 },
+    ...exams.map((exam) => ({
+      url: `${SITE.url}/exam/${exam.slug}`,
+      lastModified: exam._updatedAt ? new Date(exam._updatedAt) : undefined,
+      changeFrequency: "weekly" as const,
+      priority: 0.8,
+    })),
   ];
 }

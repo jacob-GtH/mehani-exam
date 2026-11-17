@@ -14,6 +14,10 @@ export const metadata: Metadata = {
   },
   description: "منصة تدريبية مستقلة تساعد المتقدمين من اليمن على الاستعداد للفحص المهني والاختبارات المرتبطة بالعمل في السعودية، عبر نماذج تدريبية تفاعلية ومحاكاة ومراجعة الإجابات.",
   applicationName: SITE.name,
+  verification:{
+    google:
+    "9PrTqTcHghwzPDKOeXPEOjXpMkliCKvuGPwwriPTc6Q"
+  },
   category: "education",
   openGraph: {
     locale: SITE.locale,

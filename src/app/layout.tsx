@@ -9,23 +9,23 @@ const font = Tajawal({ subsets: ["arabic"], weight: ["400", "500", "700", "800"]
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
   title: {
-    default: `${SITE.name} | التدريب على الاختبارات المهنية في اليمن`,
+    default: `${SITE.name} | التدريب على الفحص المهني السعودي من اليمن`,
     template: `%s | ${SITE.name}`,
   },
-  description: "منصة تدريبية تساعد المتقدمين في اليمن على الاستعداد للاختبارات المهنية من خلال نماذج أسئلة تفاعلية، ومحاكاة للاختبار، ومراجعة الإجابات والشروحات.",
+  description: "منصة تدريبية مستقلة تساعد المتقدمين من اليمن على الاستعداد للفحص المهني والاختبارات المرتبطة بالعمل في السعودية، عبر نماذج تدريبية تفاعلية ومحاكاة ومراجعة الإجابات.",
   applicationName: SITE.name,
   category: "education",
   openGraph: {
     locale: SITE.locale,
     type: "website",
     siteName: SITE.name,
-    title: `${SITE.name} | التدريب على الاختبارات المهنية في اليمن`,
-    description: "تدرّب على نماذج مهنية، وقِس جاهزيتك، وراجع إجاباتك من خلال منصة تدريبية مستقلة.",
+    title: `${SITE.name} | التدريب على الفحص المهني السعودي من اليمن`,
+    description: "استعد من اليمن للفحص المهني في السعودية بنماذج تدريبية للمهن، ومحاكاة للأسئلة، ومراجعة الإجابات.",
   },
   twitter: {
     card: "summary_large_image",
-    title: `${SITE.name} | التدريب على الاختبارات المهنية في اليمن`,
-    description: "نماذج تدريبية ومحاكاة للاختبارات المهنية ومراجعة الإجابات.",
+    title: `${SITE.name} | التدريب على الفحص المهني السعودي من اليمن`,
+    description: "تدريب مستقل على المهن والاختبارات المهنية المرتبطة بسوق العمل السعودي.",
   },
   robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 } },
 };
@@ -52,7 +52,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </header>
 
         <div className="border-b border-emerald-900/10 bg-[#EAF2ED] px-4 py-2 text-center text-xs font-medium text-[#426357]">
-          منصة تدريبية مستقلة للاستعداد للاختبارات المهنية في اليمن
+          منصة تدريبية مستقلة للمتقدمين من اليمن للاستعداد للفحص المهني والاعتماد المهني المرتبطين بسوق العمل السعودي
         </div>
 
         <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 sm:px-6 md:py-12">{children}</main>

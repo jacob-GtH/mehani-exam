@@ -6,10 +6,10 @@ import type { Exam } from "@/lib/data";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "التدريب على الاختبارات المهنية في اليمن",
-  description: "استعد للاختبارات المهنية في اليمن عبر نماذج تدريبية تفاعلية، وأسئلة اختيار من متعدد، ومحاكاة زمنية، ومراجعة الإجابات والشروحات.",
+  title: "الفحص المهني السعودي من اليمن | تدريب واختبارات مهنية",
+  description: "تدرّب من اليمن على المهن المرتبطة بسوق العمل السعودي واستعد للفحص المهني والاعتماد المهني عبر نماذج أسئلة ومحاكاة ومراجعة الإجابات. منصة مستقلة غير رسمية.",
   alternates: { canonical: "/" },
-  openGraph: { title: "التدريب على الاختبارات المهنية في اليمن", description: "نماذج تدريبية ومحاكاة تساعدك على الاستعداد للاختبارات المهنية.", url: "/", type: "website" },
+  openGraph: { title: "الفحص المهني السعودي من اليمن | تدريب واختبارات مهنية", description: "تدريب مستقل من اليمن للاستعداد للمهن والفحص المهني المرتبط بسوق العمل السعودي.", url: "/", type: "website" },
 };
 
 export const revalidate = 60;
@@ -23,13 +23,14 @@ export default async function Home() {
       name: SITE.name,
       url: SITE.url,
       inLanguage: "ar",
-      description: "منصة تدريبية مستقلة للاستعداد للاختبارات المهنية في اليمن.",
+      description: "منصة تدريبية مستقلة تساعد المتقدمين من اليمن على الاستعداد للفحص المهني والاعتماد المهني المرتبطين بسوق العمل السعودي.",
       audience: { "@type": "Audience", geographicArea: { "@type": "Country", name: "اليمن" } },
+      about: { "@type": "Thing", name: "الفحص المهني والاعتماد المهني في المملكة العربية السعودية" },
     },
     {
       "@context": "https://schema.org",
       "@type": "ItemList",
-      name: "الاختبارات المهنية التدريبية المتاحة",
+      name: "نماذج التدريب على المهن المرتبطة بسوق العمل السعودي",
       itemListElement: exams.map((e: Exam, i: number) => ({
         "@type": "ListItem", position: i + 1, url: `${SITE.url}/exam/${e.slug}`, name: e.title,
       })),
@@ -46,14 +47,14 @@ export default async function Home() {
         <div aria-hidden="true" className="pointer-events-none absolute -bottom-40 -left-24 h-96 w-96 rounded-full bg-emerald-400/10 blur-3xl" />
         <div className="relative mx-auto max-w-3xl">
           <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-bold text-[#D8E9DF] sm:text-sm">
-            <span className="h-2 w-2 rounded-full bg-[#B9D6A9]" /> نماذج تدريبية للمهن والاعتمادات المهنية
+            <span className="h-2 w-2 rounded-full bg-[#B9D6A9]" /> تدريب للمهن والاختبارات المهنية المرتبطة بالعمل في السعودية
           </span>
           <h1 className="mt-7 text-3xl font-extrabold leading-[1.35] tracking-tight text-white sm:text-4xl md:text-5xl">
-            استعد لاختبارك المهني
+            استعد للفحص المهني في السعودية
             <span className="mt-1 block text-[#B9D6A9]">بمعرفة وثقة أكبر</span>
           </h1>
           <p className="mx-auto mt-5 max-w-2xl text-sm leading-8 text-[#D1DED7] sm:text-base">
-            منصة تدريبية مستقلة للمتقدمين في اليمن؛ تدرّب على نماذج أسئلة متنوعة، وقِس مستواك، وراجع الإجابات والشروحات لتستعد بصورة أفضل لاختبارك المهني.
+            منصة تدريبية مستقلة للمتقدمين من اليمن الراغبين في العمل بالسعودية. تدرّب على نماذج مرتبطة بمهنتك، وقِس مستواك، وراجع الإجابات والشروحات استعداداً للفحص المهني أو متطلبات المهنة ذات الصلة.
           </p>
           <ProfessionSearch exams={exams} />
           <div className="mt-5 flex justify-center">
@@ -71,8 +72,8 @@ export default async function Home() {
         <div className="flex flex-col gap-3 border-b border-[color:var(--color-line)] pb-5 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <span className="text-xs font-extrabold tracking-wide text-[color:var(--color-pri)]">ابدأ من هنا</span>
-            <h2 className="mt-1 text-2xl font-extrabold tracking-tight sm:text-3xl">اختر اختبار مهنتك</h2>
-            <p className="mt-2 text-sm">تصفح النماذج المتاحة واختر الاختبار الذي يناسب استعدادك.</p>
+            <h2 className="mt-1 text-2xl font-extrabold tracking-tight sm:text-3xl">اختر مهنتك واستعد لاختبارها</h2>
+            <p className="mt-2 text-sm">تصفح النماذج التدريبية للمهن المرتبطة بسوق العمل السعودي.</p>
           </div>
           <span className="inline-flex w-fit items-center gap-2 rounded-full bg-white px-3.5 py-2 text-xs font-bold text-[color:var(--color-text-light)] ring-1 ring-[color:var(--color-line)]">
             <span className="h-2 w-2 rounded-full bg-[color:var(--color-ok)]" /> {exams.length} اختبار متاح
@@ -108,9 +109,9 @@ export default async function Home() {
       <section className="grid gap-6 rounded-[1.75rem] border border-[color:var(--color-line)] bg-white p-6 sm:p-8 md:grid-cols-[1fr_auto] md:items-center">
         <div>
           <p className="text-xs font-extrabold tracking-wide text-[color:var(--color-pri)]">دليل الاستعداد</p>
-          <h2 className="mt-2 text-2xl font-extrabold tracking-tight">كيف تستعد لاختبارك المهني؟</h2>
+          <h2 className="mt-2 text-2xl font-extrabold tracking-tight">كيف تستعد للفحص المهني السعودي؟</h2>
           <p className="mt-3 max-w-3xl text-sm leading-8 text-[color:var(--color-text-light)]">
-            ابدأ بتحديد موضوعات الاختبار ومتطلباته من الجهة المنظمة، ثم قسّم المراجعة إلى جلسات قصيرة، ودوّن النقاط التي تحتاج إلى تقوية. تساعدك النماذج التدريبية على التعرّف على نوعية الأسئلة وقياس تقدمك، لكنها لا تحل محل المراجع والتعليمات الرسمية.
+            إذا كنت في اليمن وتستعد للعمل في السعودية، فتحقق أولاً من انطباق الفحص المهني أو التحقق المهني على مهنتك وحالتك من المصادر الرسمية. تختلف الإجراءات بحسب المهنة والمسار، وتساعدك النماذج التدريبية هنا على مراجعة المهارات دون أن تكون اختباراً رسمياً أو بديلاً عن متطلبات الوزارة.
           </p>
         </div>
         <Link href="/guide/preparing-for-professional-exams" className="btn-secondary inline-flex min-h-12 items-center justify-center rounded-xl px-5 text-sm font-extrabold">

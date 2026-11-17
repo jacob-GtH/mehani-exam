@@ -16,8 +16,8 @@ export async function generateMetadata({ params }: P): Promise<Metadata> {
   const { slug } = await params;
   const exam = await getExamLanding(slug);
   if (!exam) return {};
-  const title = `اختبار ${exam.title} في اليمن | نموذج تدريبي ومحاكاة`;
-  const description = `تدرّب على اختبار ${exam.title} من خلال ${exam.count} سؤالاً تدريبياً، وجرّب المحاكاة الزمنية، وراجع إجاباتك لتقييم استعدادك. محتوى تدريبي مستقل وليس اختباراً رسمياً.`;
+  const title = `تدريب مهني لمهنة ${exam.title} في السعودية | من اليمن`;
+  const description = `راجع المهارات الأساسية لمهنة ${exam.title} عبر ${exam.count} سؤالاً تدريبياً ومحاكاة وشرح الإجابات. تدريب مستقل للمتقدمين من اليمن الراغبين في العمل بالسعودية.`;
   return {
     title,
     description,
@@ -42,7 +42,9 @@ export default async function ExamPage({ params }: P) {
     [`كم عدد أسئلة اختبار ${exam.title}؟`, `يتكوّن هذا النموذج التدريبي من ${exam.count} سؤالاً.`],
     ["ما درجة النجاح؟", `حد النجاح المحدد لهذا النموذج هو ${exam.passMark}%.`],
     ["هل يمكنني إعادة الاختبار؟", "نعم، يمكنك إعادة التدريب والمحاولة أكثر من مرة."],
-    ["هل هذه أسئلة الاختبار الرسمي؟", "هذه أسئلة تدريبية للمراجعة والاستعداد، ولا تمثل ضماناً لورود الأسئلة نفسها في الاختبار الرسمي."],
+    ["هل هذه أسئلة الفحص المهني السعودي الرسمية؟", "لا. هذه أسئلة تدريبية مستقلة للمراجعة، وليست أسئلة رسمية أو مسرّبة، ولا نضمن ورودها في الاختبار الفعلي."],
+    ["هل كل المهن تحتاج إلى الفحص المهني في السعودية؟", "لا يمكن تعميم ذلك على جميع المهن أو المتقدمين. تختلف متطلبات الفحص المهني والتحقق المهني بحسب المهنة والتصنيف والمسار والقرارات السارية؛ تحقق من انطباق المتطلب على حالتك عبر وزارة الموارد البشرية والتنمية الاجتماعية."],
+    ["ما الفرق بين الفحص المهني والتحقق المهني؟", "الفحص المهني يقيم المهارات من خلال اختبارات عملية ونظرية لمهن مستهدفة، بينما يركز التحقق المهني على المؤهلات والخبرات والمهارات للمهن ذات المهارات العالية. كلاهما ضمن منظومة الاعتماد المهني، لكنهما ليسا الإجراء نفسه."],
   ];
   const structuredData = [
     {
@@ -90,11 +92,11 @@ export default async function ExamPage({ params }: P) {
               <span className="h-2 w-2 rounded-full bg-[#27815D]" /> نموذج تدريبي متاح
             </div>
             <div className="space-y-3">
-              <p className="text-sm font-bold text-[color:var(--color-pri)]">نموذج تدريبي للمتقدمين في اليمن</p>
+              <p className="text-sm font-bold text-[color:var(--color-pri)]">تدريب مستقل للمتقدمين من اليمن للعمل في السعودية</p>
               <h1 className="max-w-2xl text-3xl font-black leading-[1.35] tracking-tight text-[color:var(--color-hd)] sm:text-4xl lg:text-[2.7rem]">
-                استعد لاختبار <span className="text-[color:var(--color-pri)]">{exam.title}</span> بثقة
+                تدرّب على مهارات مهنة <span className="text-[color:var(--color-pri)]">{exam.title}</span> استعداداً للعمل في السعودية
               </h1>
-              <p className="max-w-2xl text-base leading-8 text-[color:var(--color-text-light)]">{exam.description || `راجع معلوماتك ومهاراتك من خلال اختبار ${exam.title} التدريبي، وتعرّف على مستواك قبل الاختبار.`}</p>
+              <p className="max-w-2xl text-base leading-8 text-[color:var(--color-text-light)]">{exam.description || `راجع المعارف والمهارات الأساسية المرتبطة بمهنة ${exam.title} من خلال أسئلة تدريبية وشروحات تساعدك على تقييم استعدادك.`}</p>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row">
               <Link href={`/exam/${slug}/start`} className="btn-primary inline-flex min-h-14 items-center justify-center gap-3 rounded-2xl px-7 text-base font-extrabold shadow-lg shadow-emerald-950/10">
@@ -102,7 +104,7 @@ export default async function ExamPage({ params }: P) {
               </Link>
               <Link href="/#exams" className="btn-secondary inline-flex min-h-14 items-center justify-center rounded-2xl px-6 text-sm font-bold">استكشف بقية المهن</Link>
             </div>
-            <p className="text-xs leading-6 text-[color:var(--color-mute)]">محتوى تدريبي مستقل للمراجعة والاستعداد، وليس اختباراً رسمياً أو بديلاً عن تعليمات الجهة المنظمة. يُرجى الرجوع إلى الجهة المختصة للتحقق من الشروط والمواعيد المعتمدة.</p>
+            <p className="text-xs leading-6 text-[color:var(--color-mute)]">محتوى تدريبي مستقل موجّه للمتقدمين من اليمن. لا تمثل هذه الصفحة جهة رسمية ولا تقدم الاختبار الرسمي أو شهادة اعتماد. تختلف متطلبات الفحص أو التحقق باختلاف المهنة والحالة؛ راجع الجهة المختصة قبل اتخاذ أي إجراء.</p>
           </div>
 
           <div className="rounded-[1.75rem] border border-white/80 bg-[#102C2A] p-5 text-white shadow-xl shadow-emerald-950/15 sm:p-6">
@@ -169,7 +171,7 @@ export default async function ExamPage({ params }: P) {
       <section className="rounded-2xl border border-[color:var(--color-line)] bg-[#F5F8F5] p-5 sm:p-6">
         <h2 className="text-base font-extrabold">نصيحة للاستعداد</h2>
         <p className="mt-2 text-sm leading-7 text-[color:var(--color-text-light)]">استخدم هذا النموذج لقياس مستواك وتحديد الموضوعات التي تحتاج إلى مراجعة، ثم ارجع إلى المراجع والتعليمات الرسمية الخاصة باختبارك.</p>
-        <Link href="/guide/preparing-for-professional-exams" className="mt-3 inline-flex text-sm font-extrabold text-[color:var(--color-pri)] hover:underline">اطّلع على دليل الاستعداد للاختبارات المهنية ←</Link>
+        <Link href="/guide/preparing-for-professional-exams" className="mt-3 inline-flex text-sm font-extrabold text-[color:var(--color-pri)] hover:underline">اقرأ دليل الفحص المهني والاعتماد المهني في السعودية ←</Link>
       </section>
 
       <section className="rounded-[1.75rem] border border-[color:var(--color-line)] bg-white p-6 sm:p-8">
